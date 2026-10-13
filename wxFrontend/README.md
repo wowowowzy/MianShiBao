@@ -7,7 +7,7 @@ web 端 `frontend/`（Vue 3）的**原生微信小程序**版本，零编译、�
 
 ```
 wxFrontend/
-├── project.config.json      # 小程序工程配置（AppID: wx20139b3693e6c162）
+├── project.config.json      # 小程序工程配置（appid 按需填自己的）
 ├── app.js / app.json / app.wxss
 ├── utils/
 │   ├── config.js            # BASE_URL 与缓存 key、岗位/方向字典
@@ -24,16 +24,16 @@ wxFrontend/
 
 ## 运行步骤
 
-1. **打开工程**：微信开发者工具 → 导入项目 → 选择本目录 `wxFrontend/`，AppID 已配置为 `wx20139b3693e6c162`（如无权限可改用「测试号」，但静默登录需真实 AppID + AppSecret）。
+1. **打开工程**：微信开发者工具 → 导入项目 → 选择本目录 `wxFrontend/`，填你自己的小程序 AppID（如无权限可改用「测试号」，但静默登录需真实 AppID + AppSecret）。
 2. **配置合法域名**（微信公众平台后台 → 开发 → 开发管理 → 开发设置 → 服务器域名）：
-   - request 合法域名：`https://wowowzy.art`
+   - request 合法域名：你部署的后端域名（同 `utils/config.js` 的 `BASE_URL`）
    - 开发者工具勾选「不校验合法域名」可本地联调，真机预览必须在后台配置该域名。
 3. **服务端配好微信参数**：编辑后端仓库根目录的 `E:\Coding\resume-interview\.env`，填入小程序密钥（AppSecret）：
    ```
-   WECHAT_MINIAPP_APPID=wx20139b3693e6c162   # 已填好，无需改
+   WECHAT_MINIAPP_APPID=<你的小程序 AppID>
    WECHAT_MINIAPP_SECRET=<粘贴小程序密钥，平台「开发设置」获取>
    ```
-   即把 `WECHAT_MINIAPP_SECRET=` 后留空的那行补上密钥即可（AppID 已固定）。
+   即把 `WECHAT_MINIAPP_SECRET=` 后留空的那行补上密钥即可。
 4. 编译运行：**开发模式**直接点「编译」；上传体验版/发布用「上传」→ 真机扫码验证。
 
 ## 与传统账号密码的差异

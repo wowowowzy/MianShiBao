@@ -9,8 +9,6 @@
 | [`resume-interview/`](resume-interview/) | 后端 + Web 前端（单体） | Spring Boot 4.1.1、Java 17、Spring AI、SQLite、Vue 3 + Vite + Element Plus |
 | [`wxFrontend/`](wxFrontend/) | 原生微信小程序端 | 微信小程序原生（零编译，开发者工具直接打开） |
 
-> 线上地址：<https://wowowzy.art>
-
 ---
 
 ## 功能概览
@@ -82,9 +80,9 @@ start.bat
 
 ### 3. 起小程序
 
-微信开发者工具 → 导入项目 → 选择 `wxFrontend/` 目录（AppID 已配置）。
+微信开发者工具 → 导入项目 → 选择 `wxFrontend/` 目录（AppID 在工程里配置）。
 后端地址在 `wxFrontend/utils/config.js` 的 `BASE_URL`；真机预览需在微信公众平台
-「开发 → 开发管理 → 开发设置 → 服务器域名」把 `https://wowowzy.art` 加入 **request 合法域名**。
+「开发 → 开发管理 → 开发设置 → 服务器域名」把 `BASE_URL` 的域名加入 **request 合法域名**。
 
 ### 4. 生产交付形态
 
