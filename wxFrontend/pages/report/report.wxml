@@ -1,0 +1,59 @@
+<scroll-view wx:if="{{ report }}" scroll-y class="page">
+  <view class="summary">
+    <view class="score-wrap" style="border-color: {{ scoreColor }};">
+      <view class="score-num" style="color: {{ scoreColor }};">{{ report.totalScore }}<text class="score-total">/{{ report.totalFullScore }}</text></view>
+      <view class="score-pct" style="color: {{ scoreColor }};">{{ pct }}%</view>
+    </view>
+    <view class="summary-side">
+      <view class="summary-title">评分报告</view>
+      <view class="summary-sub">按『要点判分法』逐题给出得分、错点讲解与标准回答</view>
+    </view>
+  </view>
+
+  <view class="card item-card" wx:for="{{ items }}" wx:key="questionId">
+    <view class="item-title" bindtap="toggle" data-i="{{ item.index }}">
+      <text class="item-index">{{ index + 1 }}</text>
+      <text class="item-stem ellipsis">{{ item.stem }}</text>
+      <text class="item-score {{ item._scoreClass }}">{{ item.score }}/{{ item.fullScore }}</text>
+      <text class="item-arrow {{ expanded[item.index] ? 'open' : '' }}">▾</text>
+    </view>
+
+    <view wx:if="{{ expanded[item.index] }}" class="item-body">
+      <view class="item-tags">
+        <text class="tag tag-{{ item._diffColor }}">{{ item._diffLabel }}</text>
+        <text class="tag tag-info">{{ item.skill }}</text>
+      </view>
+
+      <view class="block-title">📝 你的作答</view>
+      <view class="block-content">{{ item.userAnswer || '(未作答)' }}</view>
+
+      <view class="block-title">🎯 要点判定（{{ item._hitCount }}/{{ item.points.length }} 命中）</view>
+      <view class="point-row" wx:for="{{ item.points }}" wx:for-item="p" wx:key="point">
+        <text class="point-mark {{ p.hit ? 'hit' : 'miss' }}">{{ p.hit ? '✓' : '✕' }}</text>
+        <text class="point-text">{{ p.point }}</text>
+        <text class="point-score">{{ p.hit ? '+' + p.score : '+0' }}</text>
+        <text class="point-evidence" wx:if="{{ p.hit && p.evidence }}">「{{ p.evidence }}」</text>
+      </view>
+
+      <block wx:if="{{ item.briefFeedback }}">
+        <view class="block-title">💬 评语</view>
+        <view class="block-content">{{ item.briefFeedback }}</view>
+      </block>
+
+      <view class="block-title">📖 标准回答</view>
+      <view class="block-content">{{ item.perfectAnswer || '—' }}</view>
+
+      <block wx:if="{{ item.explanation }}">
+        <view class="block-title">🔍 拆解</view>
+        <view class="block-content explain">{{ item.explanation }}</view>
+      </block>
+    </view>
+  </view>
+
+  <view class="btn btn-ghost restart-btn" bindtap="restart">{{ fromMe ? '返回我的' : '重新开始' }}</view>
+</scroll-view>
+
+<view wx:else class="empty">
+  <view>暂无评分报告</view>
+  <view class="btn btn-primary" style="width:400rpx;display:inline-flex;margin-top:30rpx;" bindtap="restart">返回首页</view>
+</view>

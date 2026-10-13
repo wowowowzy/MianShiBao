@@ -1,0 +1,166 @@
+<view class="page">
+  <!-- 步骤条（赞赏这里的流程示意） -->
+  <view class="steps">
+    <view class="step on">① 上传简历</view>
+    <view class="step-line"></view>
+    <view class="step">② 答题</view>
+    <view class="step-line"></view>
+    <view class="step">③ 评分报告</view>
+  </view>
+
+  <!-- 模式切换 -->
+  <view class="mode-row">
+    <view class="mode-btn {{ mode === 'normal' ? 'active' : '' }}" data-mode="normal" bindtap="toggleMode">常规面试</view>
+    <view class="mode-btn challenge {{ mode === 'bigtech' ? 'active' : '' }}" data-mode="bigtech" bindtap="toggleMode">🔥 大厂挑战</view>
+  </view>
+  <view wx:if="{{ mode === 'bigtech' }}" class="mode-hint">AI Agent 大厂真题 · 4 题 × 25 分 · 题干标注公司</view>
+
+  <!-- 上传区（未解析时） -->
+  <block wx:if="{{ !profile }}">
+    <view wx:if="{{ !processing && !uploading }}" class="card upload-card">
+      <view class="upload-icon">📄</view>
+      <view class="upload-main">上传一份简历，AI 生成面试题</view>
+      <view class="upload-sub">支持 PDF / Word / 图片（扫描件）/ TXT</view>
+
+      <!-- 大厂挑战：岗位固定 AI 应用开发，大方向/岗位不再可选 -->
+      <view wx:if="{{ mode === 'bigtech' }}" class="pick-row">
+        <view class="pick-label">目标岗位</view>
+        <view class="pick-value fixed">AI 应用开发（大厂挑战固定）</view>
+      </view>
+      <block wx:else>
+        <view class="pick-row">
+          <view class="pick-label">大方向</view>
+          <view class="pick-value" bindtap="pickMajorDomain">{{ majorDomain }} ▾</view>
+        </view>
+        <view class="pick-row" wx:if="{{ majorDomain !== '其他' }}">
+          <view class="pick-label">目标岗位</view>
+          <view class="pick-value" bindtap="pickRole">{{ role }} ▾</view>
+        </view>
+        <view wx:else class="pick-row pick-other">
+          <view class="pick-label">目标岗位</view>
+          <view class="pick-value muted">其他专业不选岗位</view>
+        </view>
+      </block>
+
+      <view class="upload-btns">
+        <view class="btn btn-primary" bindtap="chooseFile">{{ uploading ? '解析中…' : '选择简历文件' }}</view>
+        <view class="btn btn-ghost" bindtap="chooseImage">扫描件/图片</view>
+      </view>
+    </view>
+    <view wx:elif="{{ uploading || processing }}" class="card upload-card">
+      <view class="upload-icon pulse">⏳</view>
+      <view class="upload-main">{{ uploading ? 'AI 解析简历中…' : 'AI 处理中…' }}</view>
+      <view class="upload-sub">约需 1 分钟，请耐心等待</view>
+    </view>
+  </block>
+
+  <!-- 能力画像 -->
+  <view wx:if="{{ profile }}" class="card">
+    <view class="profile-head">
+      <text class="profile-title">能力画像</text>
+      <text class="tag tag-warn">{{ profile.targetRole || '未识别岗位' }}</text>
+      <text wx:if="{{ profile.yearsExperience !== undefined }}" class="tag tag-info">{{ profile.yearsExperience }} 年经验</text>
+    </view>
+    <view class="profile-meta">
+      {{ profile.name || '—' }} · {{ profile.school || '—' }} {{ profile.degree || '' }}
+    </view>
+
+    <view class="skills">
+      <view class="skill-chip" wx:for="{{ profile.skills }}" wx:key="name">
+        <text class="skill-name">{{ item.name }}</text>
+        <text class="skill-level">{{ item.level }}</text>
+      </view>
+    </view>
+
+    <view wx:if="{{ profile.projects && profile.projects.length }}" class="projects">
+      <view class="projects-label">项目经历（{{ profile.projects.length }} 个）</view>
+      <view class="project-item" wx:for="{{ profile.projects }}" wx:key="name">
+        <view class="project-line">
+          <text class="p-name">{{ item.name }}</text>
+          <text class="p-role">[{{ item.role }}]</text>
+        </view>
+        <view class="p-tech">
+          <text class="tag tag-info" wx:for="{{ item.techStack }}" wx:for-item="t" wx:key="*this">{{ t }}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="btn btn-primary {{ mode === 'bigtech' ? 'bigtech' : '' }} gen-btn" bindtap="startGenerate">
+      {{ mode === 'bigtech' ? '开始大厂挑战 →' : '开始生成面试题 →' }}
+    </view>
+    <view wx:if="{{ mode !== 'bigtech' }}" class="btn btn-ghost plan-btn" bindtap="openPlan">🎓 获取学习路线</view>
+    <view class="btn btn-ghost replan-btn" bindtap="changeResume">↻ 更换简历</view>
+  </view>
+</view>
+
+<!-- 底部导航提示 -->
+<view class="foot-hint">
+  <text>个人主页可查看解析 / 出题 / 作答记录</text>
+  <text class="foot-link" bindtap="goMe">去我的 →</text>
+</view>
+
+<!-- 隐私说明（首次弹一次） -->
+<view wx:if="{{ noticeVisible }}" class="mask" catchtap="closeNotice">
+  <view class="mask-card notice-card">
+    <view class="notice-title">👋 欢迎使用 AI 面试模拟器</view>
+    <view class="notice-body">
+      <view class="notice-block">
+        <view class="notice-block-title">🔒 隐私与数据，请放心</view>
+        <view class="notice-line">不收集手机号 / 邮箱；<b>不存储简历原件</b>，仅提取技能画像用于出题，可随时在个人主页删除。</view>
+      </view>
+      <view class="notice-line">个人开发 Demo，免费试用。已支持岗位：<b>Java 后端、软件测试、前端开发、AI 应用开发</b>。</view>
+      <view class="notice-line">无论你是<b>计算机</b>相关专业还是<b>其他专业</b>，都能放心练：计算机方向从海量题库<b>精选好题、结合你的项目定制</b>；其他专业 AI 也会照着简历帮你出题，一样专业、一样有针对性。</view>
+      <view class="notice-line">首页还有「大厂挑战」：AI Agent 真题，4 题 × 25 分，题干标注公司。</view>
+    </view>
+    <view class="btn btn-primary" bindtap="closeNotice">我知道了，开始体验</view>
+  </view>
+</view>
+
+<!-- 首次登录：设置昵称（选填） -->
+<view wx:if="{{ nicknameVisible }}" class="mask">
+  <view class="mask-card nick-card">
+    <view class="mask-title">设置你的昵称</view>
+    <view class="nick-sub">方便我们称呼你（选填）。点下面输入框，键盘会直接提供你的微信昵称可一键选用。</view>
+    <input class="nick-input" type="nickname" placeholder="点击输入微信昵称" value="{{ nicknameInput }}"
+      bindinput="onNicknameInput" maxlength="20" />
+    <view class="nick-btns">
+      <view class="btn btn-ghost nick-btn" bindtap="skipNickname">暂不设置</view>
+      <view class="btn btn-primary nick-btn" bindtap="saveNickname">{{ nicknameSaving ? '保存中…' : '保存' }}</view>
+    </view>
+  </view>
+</view>
+
+<!-- 学习路线 -->
+<view wx:if="{{ planVisible }}" class="mask">
+  <view class="mask-card">
+    <view class="mask-title">🎓 学习路线</view>
+    <view class="mask-close" bindtap="closePlan">✕</view>
+    <scroll-view scroll-y class="mask-scroll">
+      <view wx:if="{{ planLoading }}" class="empty">生成中，约需 30 秒…</view>
+      <block wx:elif="{{ plan }}">
+        <view class="plan-alert">{{ plan.summary }}</view>
+        <view class="plan-duration">建议周期：{{ plan.duration }}</view>
+        <view class="phase" wx:for="{{ plan.phases }}" wx:key="title">
+          <view class="phase-head">
+            <text class="phase-idx">{{ index + 1 }}</text>
+            <text class="phase-title">{{ item.title }}</text>
+            <text class="phase-days">{{ item.days }}</text>
+          </view>
+          <view wx:if="{{ item.goals && item.goals.length }}" class="phase-block">
+            <view class="phase-label">🎯 目标</view>
+            <view class="phase-li" wx:for="{{ item.goals }}" wx:for-item="g" wx:key="*this">{{ g }}</view>
+          </view>
+          <view wx:if="{{ item.tasks && item.tasks.length }}" class="phase-block">
+            <view class="phase-label">📚 任务</view>
+            <view class="phase-li" wx:for="{{ item.tasks }}" wx:for-item="t" wx:key="*this">{{ t }}</view>
+          </view>
+          <view wx:if="{{ item.practice && item.practice.length }}" class="phase-block">
+            <view class="phase-label">🛠 练习</view>
+            <view class="phase-li" wx:for="{{ item.practice }}" wx:for-item="p" wx:key="*this">{{ p }}</view>
+          </view>
+        </view>
+      </block>
+      <view wx:else class="empty">暂无学习路线，请先上传简历解析</view>
+    </scroll-view>
+  </view>
+</view>

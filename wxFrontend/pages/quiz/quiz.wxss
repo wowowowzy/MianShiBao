@@ -1,0 +1,114 @@
+.quiz-head {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #f5f5f7;
+  padding: 24rpx 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.quiz-title {
+  font-size: 34rpx;
+  font-weight: 700;
+}
+.quiz-progress {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+}
+.progress-track {
+  width: 180rpx;
+  height: 12rpx;
+  border-radius: 6rpx;
+  background: #e5e5e7;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 6rpx;
+  background: linear-gradient(180deg, #0a84ff, #0071e3);
+  transition: width 0.3s ease;
+}
+.quiz-answered {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #6e6e73;
+}
+
+.page {
+  height: calc(100vh - 130rpx);
+  padding-bottom: 60rpx;
+  box-sizing: border-box;
+}
+
+.question-card {
+  padding: 28rpx 28rpx 20rpx 40rpx;
+  position: relative;
+  overflow: visible;
+}
+.question-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 28rpx;
+  bottom: 28rpx;
+  width: 8rpx;
+  border-radius: 0 8rpx 8rpx 0;
+  background: linear-gradient(180deg, #0a84ff, #0071e3);
+}
+.q-head {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  flex-wrap: wrap;
+  margin-bottom: 16rpx;
+}
+.q-index {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #0a84ff, #0071e3);
+  color: #ffffff;
+  font-size: 24rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6rpx 16rpx rgba(0, 113, 227, 0.3);
+}
+.q-score {
+  margin-left: auto;
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #a1a1a6;
+}
+.q-stem {
+  font-size: 30rpx;
+  font-weight: 500;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  margin-bottom: 20rpx;
+}
+.q-textarea {
+  width: 100%;
+  min-height: 200rpx;
+  padding: 20rpx 24rpx;
+  box-sizing: border-box;
+  background: #f5f5f7;
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  line-height: 1.6;
+}
+.submit-btn {
+  margin: 40rpx 0;
+  height: 100rpx;
+  font-size: 34rpx;
+  position: sticky;
+  bottom: 30rpx;
+}
+.back-btn {
+  margin-top: 30rpx;
+  width: 400rpx;
+  display: inline-flex;
+}

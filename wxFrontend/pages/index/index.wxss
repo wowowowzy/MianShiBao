@@ -1,0 +1,359 @@
+.page {
+  min-height: 100vh;
+  padding: 24rpx 24rpx 40rpx;
+  box-sizing: border-box;
+}
+
+/* 步骤条 */
+.steps {
+  display: flex;
+  align-items: center;
+  margin: 10rpx auto 28rpx;
+  justify-content: center;
+}
+.step {
+  font-size: 24rpx;
+  color: #a1a1a6;
+  padding: 8rpx 0;
+}
+.step.on {
+  color: #0071e3;
+  font-weight: 600;
+}
+.step-line {
+  width: 64rpx;
+  height: 2rpx;
+  background: #e5e5e7;
+  margin: 0 12rpx;
+}
+
+/* 模式切换 */
+.mode-row {
+  display: flex;
+  gap: 18rpx;
+  margin-bottom: 18rpx;
+}
+.mode-btn {
+  flex: 1;
+  height: 84rpx;
+  line-height: 84rpx;
+  text-align: center;
+  border-radius: 999rpx;
+  background: #ffffff;
+  border: 2rpx solid #e5e5e7;
+  color: #6e6e73;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+.mode-btn.active {
+  background: linear-gradient(180deg, #0a84ff, #0071e3);
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: 0 10rpx 24rpx rgba(0, 113, 227, 0.35);
+}
+.mode-btn.challenge.active {
+  background: linear-gradient(180deg, #ff8a3d, #ff5a1f);
+  box-shadow: 0 10rpx 24rpx rgba(255, 90, 31, 0.35);
+}
+.mode-hint {
+  font-size: 24rpx;
+  color: #86868b;
+  margin-bottom: 16rpx;
+}
+
+/* 上传 */
+.upload-card {
+  text-align: center;
+  padding: 56rpx 40rpx;
+}
+.upload-icon {
+  font-size: 96rpx;
+}
+.upload-icon.pulse {
+  animation: pulse 1.2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.upload-main {
+  margin: 20rpx 0;
+  font-size: 38rpx;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.upload-sub {
+  font-size: 26rpx;
+  color: #86868b;
+  margin-bottom: 36rpx;
+}
+.pick-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22rpx 4rpx;
+  border-bottom: 2rpx solid #f2f2f4;
+}
+.pick-label {
+  font-size: 28rpx;
+  color: #6e6e73;
+}
+.pick-value {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #0071e3;
+  padding: 8rpx 0;
+}
+.pick-value.muted {
+  color: #a1a1a6;
+  font-weight: 400;
+}
+.pick-value.fixed {
+  color: #1d1d1f;
+  font-weight: 400;
+}
+.upload-btns {
+  margin-top: 40rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+/* 能力画像 */
+.profile-head {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+  flex-wrap: wrap;
+}
+.profile-title {
+  font-size: 34rpx;
+  font-weight: 700;
+}
+.profile-meta {
+  margin-top: 12rpx;
+  font-size: 26rpx;
+  color: #6e6e73;
+}
+.skills {
+  margin-top: 24rpx;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14rpx;
+}
+.skill-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10rpx;
+  padding: 10rpx 20rpx;
+  background: #f5f5f7;
+  border-radius: 999rpx;
+}
+.skill-name {
+  font-size: 26rpx;
+  color: #1d1d1f;
+}
+.skill-level {
+  font-size: 22rpx;
+  color: #86868b;
+}
+.projects {
+  margin-top: 24rpx;
+}
+.projects-label {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #6e6e73;
+  margin-bottom: 12rpx;
+}
+.project-item {
+  margin-bottom: 16rpx;
+}
+.project-line {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+.p-name {
+  font-size: 28rpx;
+  font-weight: 600;
+}
+.p-role {
+  font-size: 24rpx;
+  color: #a1a1a6;
+}
+.p-tech {
+  margin-top: 10rpx;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+.gen-btn {
+  margin-top: 32rpx;
+  height: 100rpx;
+  font-size: 34rpx;
+}
+.plan-btn {
+  margin-top: 20rpx;
+}
+.replan-btn {
+  margin-top: 20rpx;
+  color: #86868b;
+  border-color: #e5e5e7;
+}
+
+/* 脚注 */
+.foot-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  padding: 20rpx 0 40rpx;
+  font-size: 24rpx;
+  color: #a1a1a6;
+}
+.foot-link {
+  color: #0071e3;
+}
+
+/* 隐私说明 */
+.notice-card {
+  align-items: stretch;
+}
+.notice-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 24rpx;
+}
+.notice-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  margin-bottom: 28rpx;
+}
+.notice-block {
+  background: rgba(0, 113, 227, 0.06);
+  border: 2rpx solid rgba(0, 113, 227, 0.16);
+  border-radius: 20rpx;
+  padding: 20rpx 24rpx;
+  margin-bottom: 20rpx;
+}
+.notice-block-title {
+  font-weight: 700;
+  color: #0071e3;
+  margin-bottom: 12rpx;
+}
+.notice-line {
+  font-size: 26rpx;
+  color: #3a3a3c;
+  line-height: 1.7;
+  margin-bottom: 12rpx;
+}
+.notice-line b {
+  color: #1d1d1f;
+}
+
+/* 学习路线 */
+.plan-alert {
+  padding: 20rpx 24rpx;
+  background: #f0f5ff;
+  border-radius: 16rpx;
+  font-size: 26rpx;
+  color: #2b5cb8;
+  margin-bottom: 16rpx;
+}
+.plan-duration {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #6e6e73;
+  margin-bottom: 12rpx;
+}
+.phase {
+  padding: 24rpx;
+  background: #f5f5f7;
+  border-radius: 20rpx;
+  margin-bottom: 16rpx;
+}
+.phase-head {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-bottom: 8rpx;
+}
+.phase-idx {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #0a84ff, #0071e3);
+  color: #ffffff;
+  font-size: 26rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.phase-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  flex: 1;
+}
+.phase-days {
+  font-size: 22rpx;
+  color: #a1a1a6;
+}
+.phase-block {
+  margin-top: 12rpx;
+}
+.phase-label {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #6e6e73;
+  margin-bottom: 6rpx;
+}
+.phase-li {
+  font-size: 26rpx;
+  color: #1d1d1f;
+  line-height: 1.7;
+  padding-left: 20rpx;
+  position: relative;
+}
+.phase-li::before {
+  content: '';
+  position: absolute;
+  left: 4rpx;
+  top: 18rpx;
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 50%;
+  background: #0071e3;
+}
+
+/* 首次登录：设置昵称 */
+.nick-card {
+  align-items: stretch;
+}
+.nick-sub {
+  font-size: 26rpx;
+  color: #6e6e73;
+  line-height: 1.7;
+  margin-bottom: 24rpx;
+}
+.nick-input {
+  height: 96rpx;
+  padding: 0 28rpx;
+  background: #f5f5f7;
+  border-radius: 20rpx;
+  font-size: 32rpx;
+  box-sizing: border-box;
+}
+.nick-btns {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 28rpx;
+}
+.nick-btn {
+  flex: 1;
+  height: 92rpx;
+  font-size: 30rpx;
+}

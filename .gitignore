@@ -1,0 +1,66 @@
+# ============================================================
+# E:\Coding 单一仓库根 .gitignore
+# 覆盖两个子项目：
+#   resume-interview/  Spring Boot 4 + Vue3（Web 单体）
+#   wxFrontend/        微信小程序（原生）
+# 子目录另有各自的 .gitignore（backend/ frontend/ 等），规则叠加生效
+# ============================================================
+
+# ---- 环境变量 / 密钥（真实密钥不入库；.env.example 为模板需保留）----
+.env
+.env.*
+!.env.example
+*.local.properties
+*.local
+
+# ---- 日志 ----
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ---- 本地数据（SQLite）----
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# ---- Java / Maven ----
+target/
+build/
+*.class
+*.jar
+!.mvn/wrapper/maven-wrapper.jar
+
+# ---- Node / 前端构建产物 ----
+node_modules/
+dist/
+dist-ssr/
+.vite/
+
+# ---- 微信小程序 ----
+project.private.config.json
+miniprogram_npm/
+
+# ---- IDE / 编辑器 ----
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+!.vscode/extensions.json
+*.sublime-*
+.classpath
+.project
+.settings/
+.springBeans
+.apt_generated
+
+# ---- 操作系统 ----
+Thumbs.db
+ehthumbs.db
+.DS_Store
+desktop.ini

@@ -1,0 +1,93 @@
+.login-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx 44rpx;
+  box-sizing: border-box;
+  overflow: hidden;
+  background: #f5f5f7;
+}
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(40rpx);
+}
+.glow-a {
+  width: 640rpx;
+  height: 640rpx;
+  top: -240rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(10, 132, 255, 0.24);
+}
+.glow-b {
+  width: 460rpx;
+  height: 460rpx;
+  right: -160rpx;
+  bottom: -260rpx;
+  background: rgba(124, 77, 255, 0.18);
+}
+
+.login-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 88rpx 52rpx 56rpx;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 40rpx;
+  box-shadow: 0 30rpx 80rpx rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+}
+.login-title {
+  font-size: 60rpx;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: #1d1d1f;
+  text-align: center;
+}
+.login-sub {
+  font-size: 28rpx;
+  color: #86868b;
+  text-align: center;
+  margin: 20rpx 0 64rpx;
+}
+
+.wechat-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16rpx;
+  height: 100rpx;
+  border-radius: 999rpx;
+  background: linear-gradient(180deg, #07c160, #05a94a);
+  color: #ffffff;
+  font-size: 34rpx;
+  font-weight: 600;
+  box-shadow: 0 16rpx 36rpx rgba(7, 193, 96, 0.35);
+}
+.wechat-btn.disabled {
+  opacity: 0.6;
+}
+.wx-icon {
+  font-size: 40rpx;
+}
+.btn-hover {
+  opacity: 0.85;
+}
+.login-error {
+  margin-top: 28rpx;
+  padding: 20rpx 24rpx;
+  background: #fef0f0;
+  color: #f56c6c;
+  border-radius: 16rpx;
+  font-size: 26rpx;
+}
+.login-tip {
+  margin-top: 32rpx;
+  font-size: 24rpx;
+  color: #a1a1a6;
+  line-height: 1.7;
+}

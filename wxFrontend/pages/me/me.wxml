@@ -1,0 +1,157 @@
+<scroll-view scroll-y class="page">
+  <view class="welcome">
+    <view class="welcome-title">你好，{{ displayName }} 👋</view>
+    <view class="welcome-sub">你的面试练习足迹都在这里</view>
+    <view class="btn btn-ghost home-btn" bindtap="goHome">返回主页</view>
+  </view>
+
+  <view class="stats">
+    <view class="stat-card"><view class="stat-num">{{ stats.resumes }}</view><view class="stat-label">简历解析</view></view>
+    <view class="stat-card"><view class="stat-num">{{ stats.papers }}</view><view class="stat-label">生成试卷</view></view>
+    <view class="stat-card"><view class="stat-num">{{ stats.submissions }}</view><view class="stat-label">完成作答</view></view>
+  </view>
+
+  <!-- 选项卡 -->
+  <view class="tabs">
+    <view class="tab-item {{ activeTab === 'resumes' ? 'on' : '' }}" data-tab="resumes" bindtap="onTab">解析记录（{{ resumes.length }}）</view>
+    <view class="tab-item {{ activeTab === 'submissions' ? 'on' : '' }}" data-tab="submissions" bindtap="onTab">作答记录（{{ submissions.length }}）</view>
+    <view class="tab-item {{ activeTab === 'papers' ? 'on' : '' }}" data-tab="papers" bindtap="onTab">出题记录（{{ papers.length }}）</view>
+  </view>
+
+  <view wx:if="{{ loading }}" class="empty">加载中…</view>
+
+  <!-- 解析记录 -->
+  <block wx:elif="{{ activeTab === 'resumes' }}">
+    <view wx:if="{{ !resumes.length }}" class="empty">还没有解析过简历，去首页上传一份吧</view>
+    <view class="card rec-card" wx:for="{{ resumes }}" wx:key="id">
+      <view class="rec-line">
+        <text class="tag tag-info">{{ item.sourceType || '未知来源' }}</text>
+        <text wx:if="{{ item.status === 'PROCESSING' }}" class="tag tag-info">待解析…</text>
+        <text wx:elif="{{ item.status === 'FAILED' }}" class="tag tag-danger">解析失败</text>
+        <text wx:elif="{{ item.status === 'DONE' && item.profile }}" class="tag tag-warn">{{ item.profile.targetRole || '未识别岗位' }}</text>
+      </view>
+
+      <view wx:if="{{ item.status === 'DONE' && item.profile }}" class="rec-skill">
+        {{ item.profile.skills ? item.profile.skills.length : 0 }} 个技能
+        <text wx:if="{{ item.profile.yearsExperience !== undefined }}" class="rec-exp">{{ item.profile.yearsExperience }} 年经验</text>
+      </view>
+      <view wx:elif="{{ item.status === 'PROCESSING' }}" class="rec-skill processing">待解析，请稍候…</view>
+      <view wx:elif="{{ item.status === 'FAILED' }}" class="rec-skill failed">解析失败：{{ item.errorMsg || '未知错误' }}</view>
+      <view wx:else class="rec-skill">暂无画像数据</view>
+
+      <view class="rec-meta">
+        <text class="rec-time">{{ item._time }}</text>
+        <view class="rec-actions" wx:if="{{ item.status === 'DONE' && item.profile }}">
+          <view class="op-btn" data-r="{{ item }}" bindtap="viewSkills">技能</view>
+          <view class="op-btn" data-r="{{ item }}" bindtap="openPlan">学习路线</view>
+          <view class="op-btn strong" data-r="{{ item }}" bindtap="useProfile">用这份出题</view>
+          <view class="op-btn danger" data-r="{{ item }}" bindtap="removeResume">删除</view>
+        </view>
+        <view class="rec-actions" wx:else>
+          <view class="op-btn danger" data-r="{{ item }}" bindtap="removeResume">删除</view>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- 作答记录 -->
+  <block wx:elif="{{ activeTab === 'submissions' }}">
+    <view wx:if="{{ !submissions.length }}" class="empty">还没有作答记录，去首页做一份面试题吧</view>
+    <view class="card sub-card" wx:for="{{ submissions }}" wx:key="id">
+      <block wx:if="{{ item.status === 'PROCESSING' }}">
+        <text class="sub-pct">…</text>
+        <text class="sub-score">判分中，请稍候</text>
+      </block>
+      <block wx:elif="{{ item.status === 'FAILED' }}">
+        <text class="sub-pct low">!</text>
+        <text class="sub-score">判分失败</text>
+      </block>
+      <block wx:else>
+        <text class="sub-pct {{ item._pctClass }}">{{ item._pctText }}</text>
+        <text class="sub-score">{{ item.totalScore }}/{{ item.fullScore }} 分</text>
+      </block>
+      <text class="rec-time">{{ item._time }}</text>
+      <view class="sub-action">
+        <view class="op-btn strong" data-s="{{ item }}" bindtap="viewSubmission">{{ item.status === 'PROCESSING' ? '查看进度' : '查看完整报告' }}</view>
+      </view>
+    </view>
+  </block>
+
+  <!-- 出题记录 -->
+  <block wx:elif="{{ activeTab === 'papers' }}">
+    <view wx:if="{{ !papers.length }}" class="empty">还没有生成过试卷，去首页上传简历吧</view>
+    <view class="card paper-card" wx:for="{{ papers }}" wx:key="id">
+      <text class="paper-count">{{ item.questionCount }} 题</text>
+      <text wx:if="{{ item.status === 'PROCESSING' }}" class="tag tag-info">出题中…</text>
+      <text wx:elif="{{ item.status === 'FAILED' }}" class="tag tag-danger">出题失败</text>
+      <text class="rec-time">{{ item._time }}</text>
+      <view class="paper-actions">
+        <view class="op-btn" data-p="{{ item }}" bindtap="answerPaper">去答题</view>
+        <view class="op-btn strong" data-p="{{ item }}" bindtap="reusePaper">{{ reusingPaperId === item.id ? '出题中…' : '重新出题' }}</view>
+      </view>
+    </view>
+  </block>
+</scroll-view>
+
+<!-- 简历能力画像 -->
+<view wx:if="{{ resumeVisible }}" class="mask">
+  <view class="mask-card">
+    <view class="mask-title">📄 简历能力画像</view>
+    <view class="mask-close" bindtap="closeResume">✕</view>
+    <scroll-view scroll-y class="mask-scroll">
+      <block wx:if="{{ curResume.profile }}">
+        <view class="rv-meta">
+          <view class="rv-row"><text class="rv-label">姓名</text><text>{{ curResume.profile.name || '—' }}</text></view>
+          <view class="rv-row"><text class="rv-label">目标岗位</text><text>{{ curResume.profile.targetRole || '—' }}</text></view>
+          <view class="rv-row"><text class="rv-label">经验</text><text>{{ curResume.profile.yearsExperience !== undefined ? curResume.profile.yearsExperience + ' 年' : '—' }}</text></view>
+          <view class="rv-row"><text class="rv-label">教育</text><text>{{ curResume.profile.school || '—' }} {{ curResume.profile.degree || '' }}</text></view>
+        </view>
+        <view class="rv-section">技能（{{ curResume.profile.skills ? curResume.profile.skills.length : 0 }} 个）</view>
+        <view class="rv-skills">
+          <text class="tag tag-info" wx:for="{{ curResume.profile.skills }}" wx:key="name">{{ item.name }} · {{ item.level }}</text>
+        </view>
+        <block wx:if="{{ curResume.profile.projects && curResume.profile.projects.length }}">
+          <view class="rv-section">项目经历</view>
+          <view class="rv-proj" wx:for="{{ curResume.profile.projects }}" wx:key="name">
+            <view class="rv-proj-line"><text class="p-name">{{ item.name }}</text><text class="p-role">[{{ item.role }}]</text></view>
+            <view class="p-tech"><text class="tag tag-info" wx:for="{{ item.techStack }}" wx:for-item="t" wx:key="*this">{{ t }}</text></view>
+            <view class="rv-desc">{{ item.description }}</view>
+          </view>
+        </block>
+      </block>
+      <view wx:else class="empty">该份简历缺少画像数据</view>
+    </scroll-view>
+    <view class="btn btn-primary" bindtap="useCurrent">用这份简历出题</view>
+  </view>
+</view>
+
+<!-- 学习路线 -->
+<view wx:if="{{ planVisible }}" class="mask">
+  <view class="mask-card">
+    <view class="mask-title">🎓 学习路线</view>
+    <view class="mask-close" bindtap="closePlan">✕</view>
+    <scroll-view scroll-y class="mask-scroll">
+      <view wx:if="{{ planLoading }}" class="empty">生成中，约需 30 秒…</view>
+      <block wx:elif="{{ plan }}">
+        <view class="plan-alert">{{ plan.summary }}</view>
+        <view class="plan-duration">建议周期：{{ plan.duration }}</view>
+        <view class="phase" wx:for="{{ plan.phases }}" wx:key="title">
+          <view class="phase-head"><text class="phase-idx">{{ index + 1 }}</text><text class="phase-title">{{ item.title }}</text><text class="phase-days">{{ item.days }}</text></view>
+          <view wx:if="{{ item.goals && item.goals.length }}" class="phase-block">
+            <view class="phase-label">🎯 目标</view>
+            <view class="phase-li" wx:for="{{ item.goals }}" wx:for-item="g" wx:key="*this">{{ g }}</view>
+          </view>
+          <view wx:if="{{ item.tasks && item.tasks.length }}" class="phase-block">
+            <view class="phase-label">📚 任务</view>
+            <view class="phase-li" wx:for="{{ item.tasks }}" wx:for-item="t" wx:key="*this">{{ t }}</view>
+          </view>
+          <view wx:if="{{ item.practice && item.practice.length }}" class="phase-block">
+            <view class="phase-label">🛠 练习</view>
+            <view class="phase-li" wx:for="{{ item.practice }}" wx:for-item="p" wx:key="*this">{{ p }}</view>
+          </view>
+        </view>
+      </block>
+      <view wx:else class="empty">暂无学习路线</view>
+    </scroll-view>
+  </view>
+</view>

@@ -1,0 +1,17 @@
+<view class="login-page">
+  <view class="glow glow-a"></view>
+  <view class="glow glow-b"></view>
+
+  <view class="login-card">
+    <view class="login-title">🎯 面试模拟器</view>
+    <view class="login-sub">简历 → AI 出题 → 要点判分 → 错题讲解</view>
+
+    <view class="wechat-btn {{ loading ? 'disabled' : '' }}" bindtap="doLogin" hover-class="btn-hover">
+      <text class="wx-icon">💬</text>
+      <text>{{ loading ? '登录中…' : '微信一键登录' }}</text>
+    </view>
+
+    <view wx:if="{{ error }}" class="login-error">{{ error }}</view>
+    <view class="login-tip">微信登录即视为同意《隐私说明》：仅提取简历中的技能画像用于出题，不存储简历原件。</view>
+  </view>
+</view>

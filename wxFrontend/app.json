@@ -1,0 +1,29 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/login/login",
+    "pages/quiz/quiz",
+    "pages/report/report",
+    "pages/me/me"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "AI 面试模拟器",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f5f5f7",
+    "backgroundTextStyle": "light"
+  },
+  "tabBar": {
+    "color": "#86868b",
+    "selectedColor": "#0071e3",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "首页" },
+      { "pagePath": "pages/me/me", "text": "我的" }
+    ]
+  },
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents",
+  "sitemapLocation": "sitemap.json"
+}

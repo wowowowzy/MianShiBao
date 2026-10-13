@@ -1,0 +1,35 @@
+<view wx:if="{{ loading }}" class="empty">试卷加载中…</view>
+
+<block wx:elif="{{ questions.length }}">
+  <view class="quiz-head">
+    <view class="quiz-title">面试题 · 共 {{ questions.length }} 题</view>
+    <view class="quiz-progress">
+      <view class="progress-track">
+        <view class="progress-fill" style="width: {{ progress }}%"></view>
+      </view>
+      <text class="quiz-answered">{{ progress }}%</text>
+    </view>
+  </view>
+
+  <scroll-view scroll-y class="page">
+    <view class="card question-card" wx:for="{{ questions }}" wx:key="id">
+      <view class="q-head">
+        <view class="q-index">{{ index + 1 }}</view>
+        <text class="tag tag-{{ item._diffColor }}">{{ item._diffLabel }}</text>
+        <text class="tag {{ item.store === 'bigtech' ? 'tag-danger' : (item.store === 'project' ? 'tag-warn' : 'tag-info') }}">{{ item._storeLabel }}</text>
+        <text wx:if="{{ item.store === 'bigtech' && item.company }}" class="tag tag-danger">{{ item.company }}</text>
+        <text class="q-score">{{ item.fullScore || 20 }} 分</text>
+      </view>
+      <view class="q-stem">{{ item.stem }}</view>
+      <textarea class="q-textarea" placeholder="写出你的回答（尽量分点、给出关键术语与原因）"
+        value="{{ answers[item._key] }}" data-q="{{ item }}" bindinput="onInput" maxlength="-1" auto-height />
+    </view>
+
+    <view class="btn btn-primary submit-btn" bindtap="submit">交卷评分</view>
+  </scroll-view>
+</block>
+
+<view wx:else class="empty">
+  <view>没有可作答的题目</view>
+  <view class="btn btn-ghost back-btn" bindtap="backHome">返回首页重新出题</view>
+</view>
