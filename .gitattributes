@@ -1,0 +1,26 @@
+# ============================================================
+# E:\Coding 仓库统一换行/二进制规则
+# 目的：Windows 批处理在任意平台 checkout 回来都是 CRLF，双击能跑；
+#       二进制文件不被 Git 做换行转换。子目录里的 .gitattributes 优先级更高。
+# ============================================================
+
+# Windows 批处理 / PowerShell：固定 CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Shell 脚本：固定 LF
+*.sh  text eol=lf
+mvnw  text eol=lf
+
+# 二进制：不做换行转换
+*.dll   binary
+*.jar   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.pdf   binary
+*.docx  binary
+*.xlsx  binary
