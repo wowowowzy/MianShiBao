@@ -9,7 +9,7 @@
 | [`resume-interview/`](resume-interview/) | 后端 + Web 前端（单体） | Spring Boot 4.1.1、Java 17、Spring AI、SQLite、Vue 3 + Vite + Element Plus |
 | [`wxFrontend/`](wxFrontend/) | 原生微信小程序端 | 微信小程序原生（零编译，开发者工具直接打开） |
 
-> 线上地址：<https://wowowzy.art> ｜ 小程序 AppID：`wx20139b3693e6c162`
+> 线上地址：<https://wowowzy.art>
 
 ---
 
