@@ -1,7 +1,7 @@
 /**
  * 全局配置
  * BASE_URL：后端 API 网关地址（小程序 request / uploadFile 的合法域名需在微信公众平台后台
- * 「开发 → 开发管理 → 开发设置 → 服务器域名」中添加：request 合法域名 https://wowowzy.art）
+ * 「开发 → 开发管理 → 开发设置 → 服务器域名」中添加为该 BASE_URL 的域名）
  */
 module.exports = {
   BASE_URL: 'https://wowowzy.art/api',
